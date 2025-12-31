@@ -47,23 +47,7 @@ export default async function Home() {
 
     <div className="flex flex-col gap -2 w-full min-h-screen bg-[#141a2f] justify-center p-6 ">
       <div className="w-full flex flex-col gap-2">
-        {
-          groups.allGroups.map((group, index) => (
-            <GroupStatusCard
-              color={group.color}
-              coordinatorId={group.coordinatorId}
-              createdAt={group.createdAt}
-              description={group.description}
-              id={group.id}
-              name={group.name}
-              points={group.points}
-              rallyId={group.rallyId}
-              updatedAt={group.updatedAt}
-              key={group.id}
-              ranking={index + 1}
-            />
-          ))
-        }
+      
       </div>
 
       <div className="mt-2">

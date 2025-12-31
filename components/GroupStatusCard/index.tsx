@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 import { AllGroup } from "@/@types/groups/get-all-groups"
 import { Trophy, Users, Flame } from "lucide-react"
 
-export function GroupStatusCard({ color, coordinatorId, createdAt, description, id, name, points, rallyId, updatedAt, ranking }: AllGroup,) {
+export function GroupStatusCard({ color, coordinatorId, createdAt, description, id, name, points, rallyId, updatedAt }: AllGroup,) {
   return (
     <Card className="p-3 gap-1 w-full bg-[#F3A108] text-white">
       <div className="flex items-start justify-between">
@@ -13,7 +13,7 @@ export function GroupStatusCard({ color, coordinatorId, createdAt, description, 
           </Badge>
           <h2 className="text-3 font-bold">{points} pontos</h2>
           <p className="text-blue-100 mt-1">
-            #{ranking}º lugar no ranking
+            {/* #{ranking}º lugar no ranking */}
           </p>
         </div>
         <Trophy className="w-6 h-6 opacity-80" />

@@ -1,6 +1,6 @@
 'use client'
 
-import { Flash, Rank, Weight } from 'iconsax-reactjs'
+import { ArrowSquareUp, Flash, Rank, Weight } from 'iconsax-reactjs'
 import Image from 'next/image'
 import logoFju from '../../public/login-image-removebg-preview.png'
 
@@ -36,7 +36,14 @@ export function MobileMenu() {
       <a href="">
         <div className="flex flex-col items-center">
           <Flash variant="Bold" size="20" color="white" />
-          <p className='text-xs text-white'>Missão Relâmpago</p>
+          <p className='text-xs text-white'>Missões</p>
+        </div>
+      </a>
+
+      <a href="">
+        <div className="flex flex-col items-center">
+          <ArrowSquareUp variant="Bold" size="20" color="white" />
+          <p className='text-xs text-white'>Enviar desafio</p>
         </div>
       </a>
     </div>
