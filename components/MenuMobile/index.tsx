@@ -1,44 +1,22 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Home, Trophy, Zap, Users, Settings, LogOut, X, Menu } from 'lucide-react'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Button } from '../ui/button'
-import { Flash, Rank, Ranking, Weight } from 'iconsax-reactjs'
+import { Flash, Rank, Weight } from 'iconsax-reactjs'
+import Image from 'next/image'
+import logoFju from '../../public/login-image-removebg-preview.png'
 
 export function MobileMenu() {
-  const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname()
 
-  const menuItems = [
-    { title: "Início", url: "/", icon: Home },
-    { title: "Desafios", url: "/challenges", icon: Trophy },
-    { title: "Missões Relâmpago", url: "/flash-missions", icon: Zap },
-    { title: "Meu Grupo", url: "/group", icon: Users },
-    { title: "Configurações", url: "/settings", icon: Settings },
-  ]
 
-  // Fecha o menu ao mudar de rota
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
-
-  // Previne scroll do body quando menu está aberto
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
 
   return (
 
 
+    <>
+    <div className="fixed z-99 bg-black flex justify-center top-0 right-0 left-0  w-full">
+      <Image src={logoFju} width={100} height={100} alt='logo FJU branco' />
+    </div>
+    
+    
     <div className="w-full flex justify-around items-center fixed bottom-0 z-50 p-2 bg-black ">
 
       <a href="/ranking">
@@ -62,5 +40,6 @@ export function MobileMenu() {
         </div>
       </a>
     </div>
+    </>
   )
 }

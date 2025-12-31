@@ -12,26 +12,23 @@ const getAllGroups = async () => {
 export default async function PodiumRanking() {
   const groups = await getAllGroups();
 
-  // Ordena todos os grupos por pontos
+  
   const sortedGroups = groups.allGroups.sort((a, b) => b.points - a.points);
   
-  // Pega os 3 primeiros
+  
   const topThree = sortedGroups.slice(0, 3);
   
-  // Reorganiza para ordem do pódio: [2º, 1º, 3º]
+  
   const [first, second, third] = topThree;
   const podiumOrder = [second, first, third].filter(Boolean);
-  const positions = [2, 1, 3]; // Posições reais correspondentes
+  const positions = [2, 1, 3]; 
   
-  // Pega os grupos restantes (do 4º em diante)
   const remainingGroups = sortedGroups.slice(3);
 
   return (
-    <div className="min-h-screen mb-10 flex items-center justify-center p-2">
+    <div className="min-h-screen mb-15 mt-20 flex items-center justify-center p-2">
       <div className="w-full max-w-2xl">
-        <h1 className="text-2xl uppercase font-bold text-white text-center mb-12 ">
-          Ranking 🏆
-        </h1>
+        
 
         {/* Pódio dos 3 primeiros */}
         <div className="flex items-end justify-center gap-8">
@@ -51,7 +48,7 @@ export default async function PodiumRanking() {
         {/* Lista de outros grupos (4º em diante) */}
         {remainingGroups.length > 0 && (
           <div className="mt-12 bg-slate-800/50 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
-            <h3 className="text-white font-semibold mb-4">Outros Grupos</h3>
+            <h3 className="text-white font-semibold mb-4 font-sans">Outros Grupos</h3>
             <div className="space-y-3">
               {remainingGroups.map((group, index) => (
                 <div
