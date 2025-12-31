@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { ChallengesGrid } from "@/components/ChallengesGrid";
 import { FlashMissionsAlert } from "@/components/FlashMissionsAlert";
@@ -41,9 +42,6 @@ export default async function Home() {
     getFlashMissions(),
     getAllChallenges()
   ])
-
-  console.log(groups)
-
 
   return (
 
@@ -134,10 +132,6 @@ export default async function Home() {
           </Tabs>
         </div>
       </div>
-
-      {/* {ralis.Allrali.map((rali) => (
-        <div className="text-white">{rali.name}</div>
-      ))} */}
     </div>
   );
 }

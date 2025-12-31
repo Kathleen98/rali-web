@@ -3,14 +3,14 @@ export interface AllGroupsProps {
 }
 
 export interface AllGroup {
-  id: string
+  id?: string
   name: string
-  description: string
+  description?: string
   color: string
   points: number
-  rallyId: string
-  coordinatorId: string
-  createdAt: string
-  updatedAt: string
-  ranking: number
+  rallyId?: string
+  coordinatorId?: string
+  createdAt?: string
+  updatedAt?: string
+  image: string
 }
