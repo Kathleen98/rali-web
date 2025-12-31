@@ -32,7 +32,7 @@ export default async function LoginPage(){
       secure: env.NODE_ENV === 'production'
     })
 
-    redirect('/')
+    redirect('/ranking')
   }
 
   return(
