@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -48,9 +50,9 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.1344 0 0);
-  --foreground: oklch(93.393% 0.00718 268.591);
-  --card: oklch(1 0 0);
+  --background: oklch(0.2318 0.018 270.53);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.3427 0.0289 271.27);
   --card-foreground: oklch(0.13 0.028 261.692);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.13 0.028 261.692);
