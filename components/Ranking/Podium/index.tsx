@@ -27,7 +27,7 @@ export default async function PodiumRanking() {
   const remainingGroups = sortedGroups.slice(3);
 
   return (
-    <div className="min-h-screen mb-10 flex items-center justify-center p-8">
+    <div className="min-h-screen mb-10 flex items-center justify-center p-2">
       <div className="w-full max-w-2xl">
         <h1 className="text-2xl uppercase font-bold text-white text-center mb-12 ">
           Ranking 🏆
