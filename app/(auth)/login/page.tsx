@@ -32,7 +32,7 @@ export default async function LoginPage(){
       path: '/',
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
-      expires: timeExpiresCookie
+      maxAge: timeExpiresCookie
     })
 
     redirect('/ranking')
