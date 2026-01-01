@@ -25,11 +25,14 @@ export default async function LoginPage(){
       throw new Error('Error validate')
     }
 
+    const timeExpiresCookie = 60 * 60 * 24 * 7 // 7 days
+
     const cookie = await cookies()
     cookie.set('session', response.data.access_token, {
       path: '/',
       httpOnly: true,
-      secure: env.NODE_ENV === 'production'
+      secure: env.NODE_ENV === 'production',
+      expires: timeExpiresCookie
     })
 
     redirect('/ranking')
