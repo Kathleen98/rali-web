@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="">
+    <div className="min-h-screen mb-15 mt-20 flex items-center justify-center p-2">
       <MobileMenu />
       {children}
     </div>
