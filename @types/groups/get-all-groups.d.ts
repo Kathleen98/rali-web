@@ -6,7 +6,7 @@ export interface AllGroup {
   id?: string
   name: string
   description?: string
-  color: string
+  color?: string
   points: number
   rallyId?: string
   coordinatorId?: string
