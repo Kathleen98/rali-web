@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 
 
 export const raliAPI = axios.create({
-  baseURL: env.NEXT_PUBLIC_RALI_API_URL
+  baseURL: env.NEXT_PUBLIC_RALI_API_URL,
+  withCredentials: true,
 })
 
 raliAPI.interceptors.request.use( async config => {
