@@ -35,7 +35,7 @@ export default async function LoginPage(){
       maxAge: timeExpiresCookie
     })
 
-    redirect('/ranking')
+    redirect('/')
   }
 
   return(
