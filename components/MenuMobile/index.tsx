@@ -26,7 +26,7 @@ export function MobileMenu() {
         </div>
       </a>
 
-      <a href="">
+      <a href="/challenges">
         <div className="flex flex-col items-center">
           <Weight variant="Bold" size="20" color="white" />
           <p className='text-xs text-white'>Desafios</p>
