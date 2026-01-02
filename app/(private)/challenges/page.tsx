@@ -20,7 +20,7 @@ export default async function ChallengesPage() {
       <Dialog>
         <form>
           <DialogTrigger asChild>
-            <Button variant="outline">
+            <Button className="bg-[#9E2221] w-full">
               Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
             </Button>
           </DialogTrigger>
