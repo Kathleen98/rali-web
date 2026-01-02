@@ -15,16 +15,15 @@ const GetAllChallenges = async () => {
 
 export default async function ChallengesPage() {
   const [allChallenges] = await Promise.all([GetAllChallenges()]);
+
   return (
     <div className="w-full flex flex-col gap-3">
       <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button className="bg-[#9E2221] w-full">
-              Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
-            </Button>
-          </DialogTrigger>
-        </form>
+        <DialogTrigger asChild>
+          <Button className="bg-[#9E2221] w-full">
+            Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
+          </Button>
+        </DialogTrigger>
         <FormDialog />
       </Dialog>
 
