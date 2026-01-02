@@ -1,3 +1,4 @@
+import { CalendarComponent } from "../Calendar";
 import { Button } from "../ui/button";
 import {
   DialogClose,
@@ -9,6 +10,15 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { Switch } from "../ui/switch";
 
 export const FormDialog = () => {
@@ -40,20 +50,32 @@ export const FormDialog = () => {
           </div>
           <div className="grid gap-3">
             <Label htmlFor="requiresText">Comprovar texto</Label>
-            <Switch id="requiresText" name="requiresText" />
+            <Switch  id="requiresText" name="requiresText" />
           </div>
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="startDate">Data inicial</Label>
-          <Input type="number" id="startDate" name="startDate" />
+          <CalendarComponent calendarLabel="Data incial" timerLabel="horário" />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="endDate">Data final</Label>
-          <Input type="number" id="endDate" name="endDate" />
+          <CalendarComponent calendarLabel="Data final" timerLabel="horário" />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="rallyId">Rali</Label>
-          <Input type="number" id="rallyId" name="rallyId" />
+          <Select>
+            <SelectTrigger className="w-auto">
+              <SelectValue placeholder="Selecione o rali" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                <SelectItem value="apple">Apple</SelectItem>
+                <SelectItem value="banana">Banana</SelectItem>
+                <SelectItem value="blueberry">Blueberry</SelectItem>
+                <SelectItem value="grapes">Grapes</SelectItem>
+                <SelectItem value="pineapple">Pineapple</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <DialogFooter>
@@ -61,7 +83,7 @@ export const FormDialog = () => {
           <DialogClose asChild>
             <Button variant="outline">Cancelar</Button>
           </DialogClose>
-          <Button className="flex-1" type="submit">
+          <Button className="flex-1 bg-[#9E2221]" type="submit">
             Criar desafio
           </Button>
         </div>
