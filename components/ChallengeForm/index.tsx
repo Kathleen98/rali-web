@@ -16,7 +16,7 @@ import { Switch } from "../ui/switch";
 import { useState } from "react";
 import { CreatedChallenges } from "@/@types/rali/get-rali";
 
-export const FormDialog = ({ id, name }: CreatedChallenges) => {
+export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
   const [requiresPhoto, setRequiresPhoto] = useState(false);
   const [requiresText, setRequiresText] = useState(false);
   const [startDate, setStartDate] = useState("");
@@ -32,7 +32,7 @@ export const FormDialog = ({ id, name }: CreatedChallenges) => {
       </DialogHeader>
 
       <form action={handleCreateChallenge} className="flex flex-col flex-1 min-h-0 overflow-hidden">
-        {/* Área com scroll - IMPORTANTE: overflow-x-hidden */}
+
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-1">
           <div className="space-y-4">
             <div className="grid gap-2">
@@ -98,12 +98,12 @@ export const FormDialog = ({ id, name }: CreatedChallenges) => {
               />
             </div>
             
-            {/* Campo hidden para rallyId */}
+         
             <input type="hidden" name="rallyId" value={id} />
           </div>
         </div>
 
-        {/* Footer fixo */}
+
         <DialogFooter className="shrink-0 pt-4 border-t mt-4">
           <div className="flex gap-3 w-full">
             <DialogClose asChild>
