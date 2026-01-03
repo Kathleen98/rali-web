@@ -13,14 +13,54 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CreatedChallenges } from "@/@types/rali/get-rali";
+import { toast } from "sonner";
 
 export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
   const [requiresPhoto, setRequiresPhoto] = useState(false);
   const [requiresText, setRequiresText] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (formData: FormData) => {
+    const resetForm = () => {
+      formRef.current?.reset();
+      setRequiresPhoto(false);
+      setRequiresText(false);
+      setStartDate("");
+      setEndDate("");
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await handleCreateChallenge(formData);
+
+      if (result.success) {
+        toast.success("✅ Sucesso!", {
+          description: result.message,
+        });
+        resetForm();
+         closeButtonRef.current?.click();
+      } else {
+        toast.error("❌ Erro", {
+          description: result.error,
+        });
+      }
+    } catch (error) {
+      toast.error("❌ Erro", {
+        description: "Erro inesperado ao criar desafio",
+      });
+      console.error(error)
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <DialogContent className="max-h-[70vh] max-w-91.25 flex flex-col overflow-hidden">
@@ -31,21 +71,24 @@ export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
         </DialogDescription>
       </DialogHeader>
 
-      <form action={handleCreateChallenge} className="flex flex-col flex-1 min-h-0 overflow-hidden">
-
+      <form
+        action={handleSubmit}
+        ref={formRef}
+        className="flex flex-col flex-1 min-h-0 overflow-hidden"
+      >
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-1">
           <div className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="title">Título</Label>
-              <Input id="title" name="title" required />
+              <Input disabled={isSubmitting} id="title" name="title" required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="description">Descrição</Label>
-              <Input id="description" name="description" required />
+              <Input disabled={isSubmitting} id="description" name="description" required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="points">Pontos</Label>
-              <Input type="number" id="points" name="points" required />
+              <Input disabled={isSubmitting} type="number" id="points" name="points" required />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex items-center gap-2">
@@ -97,17 +140,15 @@ export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
                 onChange={setEndDate}
               />
             </div>
-            
-         
-            <input type="hidden" name="rallyId" value={id} />
+
+            <input disabled={isSubmitting} type="hidden" name="rallyId" value={id} />
           </div>
         </div>
-
 
         <DialogFooter className="shrink-0 pt-4 border-t mt-4">
           <div className="flex gap-3 w-full">
             <DialogClose asChild>
-              <Button variant="outline" type="button" className="flex-1">
+              <Button ref={closeButtonRef} variant="outline" type="button" className="flex-1">
                 Cancelar
               </Button>
             </DialogClose>
