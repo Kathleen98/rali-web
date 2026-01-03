@@ -11,5 +11,8 @@ export interface GetRali {
   endDate: string
   createdById: string
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
 }
+
+
+export type CreatedChallenges = Pick<GetRali, 'id' | 'name'>

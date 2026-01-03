@@ -1,4 +1,5 @@
 import { ChallengesProps } from "@/@types/challenges/get-all-challenges";
+import { RaliProps } from "@/@types/rali/get-rali";
 import { FormDialog } from "@/components/Dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,17 @@ const GetAllChallenges = async () => {
   return data as ChallengesProps;
 };
 
+const GetraliActive = async () => {
+  const {data } = await raliAPI.get('/rali')
+
+  return data as RaliProps
+}
+
 export default async function ChallengesPage() {
-  const [allChallenges] = await Promise.all([GetAllChallenges()]);
+  const [allChallenges, raliActive] = await Promise.all([GetAllChallenges(), GetraliActive()]);
+
+  const rali = raliActive.Allrali.filter((rali) => rali.status === 'ACTIVE')[0]
+
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -24,7 +34,9 @@ export default async function ChallengesPage() {
             Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
           </Button>
         </DialogTrigger>
-        <FormDialog />
+        <div className="w-[80vw]">
+          <FormDialog id={rali.id} name={rali.name} />
+        </div>
       </Dialog>
 
       {allChallenges.challenges
@@ -53,7 +65,7 @@ export default async function ChallengesPage() {
               <div className="bg-white/10 rounded-lg p-3">
                 <Users className="w-5 h-5 mb-1" />
                 <p className="text-xs text-blue-100">
-                  Desafio ativo até 03/01/2026
+                  Desafio ativo até {challenge.endDate}
                 </p>
               </div>
               <div className="bg-white/10 rounded-lg p-3">
