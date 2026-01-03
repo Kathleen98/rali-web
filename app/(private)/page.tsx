@@ -1,121 +1,65 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ChallengesGrid } from "@/components/ChallengesGrid";
-import { FlashMissionsAlert } from "@/components/FlashMissionsAlert";
-import { GroupStatusCard } from "@/components/GroupStatusCard";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { raliAPI } from "@/lib/axios/rali-api";
-import { ChallengesProps } from "@/@types/challenges/get-all-challenges";
-import { AllFlashMissionProps } from "@/@types/flash-missions/get-all-flash-missions";
 import { AllGroupsProps } from "@/@types/groups/get-all-groups";
-import { RaliProps } from "@/@types/rali/get-rali";
+import { PodiumCard } from "@/components/Ranking/Podium/PodiumCard";
+import { ListRanking } from "@/components/Ranking/RankingList/ListRanking";
 
-
-const getRali = async () => {
-  const { data } = await raliAPI.get('/rali')
-
-  return data as RaliProps
-}
 
 const getAllGroups = async () => {
-  const { data } = await raliAPI.get('/groups')
+  const { data } = await raliAPI.get("/groups");
+  return data as AllGroupsProps;
+};
 
-  return data as AllGroupsProps
-}
+export default async function RankingPage() {
+  const groups = await getAllGroups();
 
-const getFlashMissions = async () => {
-  const { data } = await raliAPI.get('/flash-missions')
+  const sortedGroups = groups.allGroups.sort((a, b) => b.points - a.points);
 
-  return data as AllFlashMissionProps
-}
+  const topThree = sortedGroups.slice(0, 3);
 
-const getAllChallenges = async () => {
-  const { data } = await raliAPI.get('/challenge')
+  const [first, second, third] = topThree;
+  const podiumOrder = [second, first, third].filter(Boolean);
+  const positions = [2, 1, 3];
 
-  return data as ChallengesProps
-}
-
-export default async function Home() {
-  const [ralis, groups, flashMissions, challenges] = await Promise.all([
-    getRali(),
-    getAllGroups(),
-    getFlashMissions(),
-    getAllChallenges()
-  ])
+  const remainingGroups = sortedGroups.slice(3);
 
   return (
-
-    <div className="flex flex-col gap -2 w-full min-h-screen bg-[#141a2f] justify-center p-6 ">
-      <div className="w-full flex flex-col gap-2">
-      
-      </div>
-
-      <div className="mt-2">
-        <FlashMissionsAlert allFlashMissions={flashMissions.allFlashMissions} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <Tabs defaultValue="active">
-            <TabsList>
-              <TabsTrigger value="active">Ativos </TabsTrigger>
-              <TabsTrigger value="pending">Aguardando </TabsTrigger>
-              <TabsTrigger value="completed">Concluídos </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="active" className="mt-6">
-              {challenges.challenges.filter((challe) => challe.status === 'ACTIVE').map((challenge) => (
-                <ChallengesGrid
-                  id={challenge.id}
-                  description={challenge.description}
-                  endDate={challenge.endDate}
-                  points={challenge.points}
-                  requiresPhoto={challenge.requiresPhoto}
-                  requiresText={challenge.requiresText}
-                  status={challenge.status}
-                  title={challenge.title}
-                  key={challenge.id}
-
-                />
-              ))}
-            </TabsContent>
-
-            <TabsContent value="pending" className="mt-6">
-              {challenges.challenges.filter((challe) => challe.status === 'PENDING').map((challenge) => (
-                <ChallengesGrid
-                  id={challenge.id}
-                  description={challenge.description}
-                  endDate={challenge.endDate}
-                  points={challenge.points}
-                  requiresPhoto={challenge.requiresPhoto}
-                  requiresText={challenge.requiresText}
-                  status={challenge.status}
-                  title={challenge.title}
-                  key={challenge.id}
-
-                />
-              ))}
-            </TabsContent>
-
-            <TabsContent value="completed" className="mt-6">
-              {challenges.challenges.filter((challe) => challe.status === 'COMPLETED').map((challenge) => (
-                <ChallengesGrid
-                  id={challenge.id}
-                  description={challenge.description}
-                  endDate={challenge.endDate}
-                  points={challenge.points}
-                  requiresPhoto={challenge.requiresPhoto}
-                  requiresText={challenge.requiresText}
-                  status={challenge.status}
-                  title={challenge.title}
-                  key={challenge.id}
-
-                />
-              ))}
-            </TabsContent>
-          </Tabs>
+    <div className="w-full max-w-2xl">
+        {/* Pódio dos 3 primeiros */}
+        <div className="flex items-end justify-center gap-8">
+          {podiumOrder.map((group, index) => (
+            <PodiumCard
+              key={group.id}
+              image={group.image}
+              color={group.color}
+              name={group.name}
+              points={group.points}
+              id={group.id}
+              position={positions[index]} // Passa 2, 1, 3
+            />
+          ))}
         </div>
+
+        {/* Lista de outros grupos (4º em diante) */}
+        {remainingGroups.length > 0 && (
+          <div className="mt-12 bg-slate-800/50 rounded-xl p-6 backdrop-blur-sm border border-slate-700">
+            <h3 className="text-white font-semibold mb-4 font-sans">
+              Outros Grupos
+            </h3>
+            <div className="space-y-3">
+              {remainingGroups.map((group, index) => (
+                <ListRanking
+                  key={group.id}
+                  id={group.id}
+                  image={group.image}
+                  name={group.name}
+                  points={group.points}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-    </div>
   );
 }
