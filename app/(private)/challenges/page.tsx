@@ -1,6 +1,7 @@
 import { ChallengesProps } from "@/@types/challenges/get-all-challenges";
 import { RaliProps } from "@/@types/rali/get-rali";
 import { ChallengeForm } from "@/components/ChallengeForm";
+import { ChallengeFormSubmit } from "@/components/ChallengeFormSubmit";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -56,9 +57,7 @@ export default async function ChallengesPage() {
                 <p className="mb-2 text-lg font-bold ">{challenge.title}</p>
 
                 <h2 className="text-3 text-sm font-bold">Descrição</h2>
-                <p className=" text-sm  mt-1">
-                  {challenge.description}
-                </p>
+                <p className=" text-sm  mt-1">{challenge.description}</p>
               </div>
               <Trophy className="w-6 h-6 opacity-80" />
             </div>
@@ -90,7 +89,18 @@ export default async function ChallengesPage() {
                 <p className="text-sm font-semibold">{challenge.points}</p>
               </div>
             </div>
-            <Button className="mt-3">Enviar desafio</Button>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                {/* <Button className="bg-[#9E2221] w-full">
+            Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
+          </Button> */}
+                <Button className="mt-3">Enviar desafio</Button>
+              </DialogTrigger>
+              <div className="w-[80vw]">
+                <ChallengeFormSubmit />
+              </div>
+            </Dialog>
           </Card>
         ))}
     </div>

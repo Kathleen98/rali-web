@@ -3,6 +3,7 @@
 import { ArrowSquareUp, Flash, Rank, Weight } from 'iconsax-reactjs'
 import Image from 'next/image'
 import logoFju from '../../public/login-image-removebg-preview.png'
+import { X } from 'lucide-react'
 
 export function MobileMenu() {
 
@@ -33,7 +34,7 @@ export function MobileMenu() {
         </div>
       </a>
 
-      <a href="">
+      <a href="/flash-missions">
         <div className="flex flex-col items-center">
           <Flash variant="Bold" size="20" color="white" />
           <p className='text-xs text-white'>Missões</p>
@@ -42,8 +43,8 @@ export function MobileMenu() {
 
       <a href="">
         <div className="flex flex-col items-center">
-          <ArrowSquareUp variant="Bold" size="20" color="white" />
-          <p className='text-xs text-white'>Enviar desafio</p>
+          <X  size="20" color="white" />
+          <p className='text-xs text-white'>Penalidades</p>
         </div>
       </a>
     </div>
