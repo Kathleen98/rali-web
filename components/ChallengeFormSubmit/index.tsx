@@ -22,17 +22,23 @@ import { useQuery } from "@tanstack/react-query";
 import { getMembersAction } from "@/app/actions/get-all-members";
 import { useUser } from "@/contexts/UserInfoContext";
 
-export const ChallengeFormSubmit = () => {
+interface ChallengeFormSubmitProps{
+  title: string,
+  description: string,
+  challengeId: string
+}
+
+export const ChallengeFormSubmit = ({title, description, challengeId} : ChallengeFormSubmitProps) => {
   const { userInfo } = useUser();
   const groupId = userInfo?.groupId;
 
-  const {data: getAllMembers} = useQuery({
+  const { data: getAllMembers } = useQuery({
     queryKey: ["get-all-members", groupId],
-    queryFn: () =>  getMembersAction(groupId!),
-    enabled: !!groupId
+    queryFn: () => getMembersAction(groupId!),
+    enabled: !!groupId,
   });
 
-  console.log(getAllMembers)
+  const allmembers = getAllMembers?.members;
 
   return (
     <DialogContent className="max-h-[70vh] max-w-91.25 flex flex-col overflow-hidden">
@@ -52,11 +58,11 @@ export const ChallengeFormSubmit = () => {
           <div className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="title">Nome do Desafio</Label>
-              <p></p>
+              <p>{title}</p>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="description">Descrição</Label>
-              <p></p>
+              <p>{description}</p>
             </div>
 
             <div className="grid gap-2">
@@ -66,9 +72,11 @@ export const ChallengeFormSubmit = () => {
                   <SelectValue placeholder="Selecione o membro" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  {allmembers?.map((member) => (
+                    <SelectItem key={member.id} value={member.id}>
+                      {member.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

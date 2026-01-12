@@ -98,7 +98,7 @@ export default async function ChallengesPage() {
                 <Button className="mt-3">Enviar desafio</Button>
               </DialogTrigger>
               <div className="w-[80vw]">
-                <ChallengeFormSubmit />
+                <ChallengeFormSubmit title={challenge.title} description={challenge.description} challengeId={challenge.id} />
               </div>
             </Dialog>
           </Card>
