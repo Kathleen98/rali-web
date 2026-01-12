@@ -11,15 +11,15 @@ import { format } from "date-fns";
 import { Flame, Trophy, Users } from "lucide-react";
 
 const GetAllChallenges = async () => {
-  const { data } = await raliAPI.get("/challenge");
+  const { data } = await raliAPI.get<ChallengesProps>("/challenge");
 
-  return data as ChallengesProps;
+  return data ;
 };
 
 const GetraliActive = async () => {
-  const { data } = await raliAPI.get("/rali");
+  const { data } = await raliAPI.get<RaliProps>("/rali");
 
-  return data as RaliProps;
+  return data;
 };
 
 export default async function ChallengesPage() {
