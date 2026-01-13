@@ -17,7 +17,8 @@ import { useRef, useState } from "react";
 import { CreatedChallenges } from "@/@types/rali/get-rali";
 import { toast } from "sonner";
 
-export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
+
+export const ChallengeForm = ({ id, name}: CreatedChallenges) => {
   const [requiresPhoto, setRequiresPhoto] = useState(false);
   const [requiresText, setRequiresText] = useState(false);
   const [startDate, setStartDate] = useState("");
@@ -143,6 +144,7 @@ export const ChallengeForm = ({ id, name }: CreatedChallenges) => {
 
             <input disabled={isSubmitting} type="hidden" name="rallyId" value={id} />
           </div>
+
         </div>
 
         <DialogFooter className="shrink-0 pt-4 border-t mt-4">
