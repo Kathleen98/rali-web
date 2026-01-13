@@ -21,6 +21,9 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getMembersAction } from "@/app/actions/get-all-members";
 import { useUser } from "@/contexts/UserInfoContext";
+import { submissionChallegeAction } from "@/app/actions/submission-challenge";
+import { toast } from "sonner";
+import { useRef, useState } from "react";
 
 interface ChallengeFormSubmitProps{
   title: string,
@@ -31,6 +34,9 @@ interface ChallengeFormSubmitProps{
 export const ChallengeFormSubmit = ({title, description, challengeId} : ChallengeFormSubmitProps) => {
   const { userInfo } = useUser();
   const groupId = userInfo?.groupId;
+  const formRef = useRef<HTMLFormElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: getAllMembers } = useQuery({
     queryKey: ["get-all-members", groupId],
@@ -39,6 +45,36 @@ export const ChallengeFormSubmit = ({title, description, challengeId} : Challeng
   });
 
   const allmembers = getAllMembers?.members;
+
+  const handleSubmit = async (formData: FormData) =>{
+     const resetForm = () => {
+      formRef.current?.reset();
+      
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await submissionChallegeAction(formData);
+
+      if (result.success) {
+        toast.success("✅ Sucesso!", {
+          description: result.message,
+        });
+        resetForm();
+         closeButtonRef.current?.click();
+      } else {
+        toast.error("❌ Erro", {
+          description: result.error,
+        });
+      }
+    } catch (error) {
+      toast.error("❌ Erro", {
+        description: "Erro inesperado ao criar desafio",
+      });
+      console.error(error)
+    } 
+  }
 
   return (
     <DialogContent className="max-h-[70vh] max-w-91.25 flex flex-col overflow-hidden">
@@ -50,6 +86,8 @@ export const ChallengeFormSubmit = ({title, description, challengeId} : Challeng
       </DialogHeader>
 
       <form
+      ref={formRef}
+      action={handleSubmit}
         // action={handleSubmit}
         // ref={formRef}
         className="flex flex-col flex-1 min-h-0 overflow-hidden"
@@ -67,7 +105,7 @@ export const ChallengeFormSubmit = ({title, description, challengeId} : Challeng
 
             <div className="grid gap-2">
               <Label htmlFor="description">Membro que realizou o desafio</Label>
-              <Select>
+              <Select disabled={isSubmitting} name="memberId" required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione o membro" />
                 </SelectTrigger>
@@ -83,17 +121,18 @@ export const ChallengeFormSubmit = ({title, description, challengeId} : Challeng
 
             <div className="grid gap-2">
               <Label htmlFor="description">Enviar foto</Label>
-              <Input type="file" id="file" name="file" required />
+              <Input disabled={isSubmitting} type="file" id="file" name="file" required />
             </div>
 
-            <input type="hidden" name="rallyId" />
+            <Input className="hidden" name={'challengeId'} value={challengeId} />
+
           </div>
         </div>
 
         <DialogFooter className="shrink-0 pt-4 border-t mt-4">
           <div className="flex gap-3 w-full">
             <DialogClose asChild>
-              <Button variant="outline" type="button" className="flex-1">
+              <Button ref={closeButtonRef} variant="outline" type="button" className="flex-1">
                 Cancelar
               </Button>
             </DialogClose>
