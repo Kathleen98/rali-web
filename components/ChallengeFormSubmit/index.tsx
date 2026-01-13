@@ -124,7 +124,7 @@ export const ChallengeFormSubmit = ({title, description, challengeId} : Challeng
               <Input disabled={isSubmitting} type="file" id="file" name="file" required />
             </div>
 
-            <Input className="hidden" name={'challengeId'} value={challengeId} />
+            <Input className="hidden" name={'challengeId'} defaultValue={challengeId} />
 
           </div>
         </div>
