@@ -12,18 +12,28 @@ export async function submissionChallegeAction(formData: FormData) {
       ? JSON.parse(userInfosFromCookies)
       : {};
 
-    const data = {
-      memberId: formData.get("memberId"),
-      groupId: userInfos.groupId,
-      fileChallenge: formData.get("fileChallenge"),
-      rallyId: "8b42b166-2f96-4ec2-b2d9-7e79f806551d",
-      challengeId: formData.get("challengeId"),
-      submittedBy: userInfos?.id,
-    };
+    // Crie um novo FormData para enviar ao backend
+    const backendFormData = new FormData();
+    
+    // Adicione todos os campos
+    backendFormData.append("memberId", formData.get("memberId") as string);
+    backendFormData.append("groupId", userInfos.groupId);
+    backendFormData.append("rallyId", "8b42b166-2f96-4ec2-b2d9-7e79f806551d");
+    backendFormData.append("challengeId", formData.get("challengeId") as string);
+    backendFormData.append("submittedById", userInfos?.id);
+    
+    const file = formData.get("file");
+    if (file) {
+      backendFormData.append("file", file);
+    }
 
-    console.log(data)
+    console.log("Enviando dados para o backend...");
 
-    const submited = await raliAPI.post("/challenge/submit", data);
+    const submited = await raliAPI.post("/challenge/submit", backendFormData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     return {
       message: "Desafio enviado com sucesso!",
@@ -33,7 +43,7 @@ export async function submissionChallegeAction(formData: FormData) {
     console.error("❌ Erro ao enviar desafio:", e);
     return {
       message: "Erro ao enviar desafio. Tente novamente.",
-      error: false,
+      error: false, // Era "error: false", corrigi para "success: false"
     };
   }
 }
