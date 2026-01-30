@@ -1,9 +1,9 @@
 'use client'
 
-import { ArrowSquareUp, Flash, Rank, Weight } from 'iconsax-reactjs'
+import { Flash, Rank, Weight } from 'iconsax-reactjs'
 import Image from 'next/image'
 import logoFju from '../../public/login-image-removebg-preview.png'
-import { X } from 'lucide-react'
+import { ListCheck } from 'lucide-react'
 
 export function MobileMenu() {
 
@@ -43,8 +43,8 @@ export function MobileMenu() {
 
       <a href="">
         <div className="flex flex-col items-center">
-          <X  size="20" color="white" />
-          <p className='text-xs text-white'>Penalidades</p>
+          <ListCheck size="20" color="white" />
+          <p className='text-xs text-white'>Envios</p>
         </div>
       </a>
     </div>
