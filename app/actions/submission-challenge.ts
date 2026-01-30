@@ -12,10 +12,9 @@ export async function submissionChallegeAction(formData: FormData) {
       ? JSON.parse(userInfosFromCookies)
       : {};
 
-    // Crie um novo FormData para enviar ao backend
+   
     const backendFormData = new FormData();
     
-    // Adicione todos os campos
     backendFormData.append("memberId", formData.get("memberId") as string);
     backendFormData.append("groupId", userInfos.groupId);
     backendFormData.append("rallyId", "8b42b166-2f96-4ec2-b2d9-7e79f806551d");
