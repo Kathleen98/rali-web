@@ -10,8 +10,8 @@ export interface Challenge {
   status: string
   requiresPhoto: boolean
   requiresText: boolean
-  startDate?: string
-  endDate?: string
+  startDate: string
+  endDate: string
   rallyId?: string
   createdById?: string
   createdAt?: string

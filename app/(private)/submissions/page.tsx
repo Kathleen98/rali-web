@@ -16,7 +16,6 @@ const getAllSubmissions = async () => {
 export default async function SubmissionsPage() {
   const allSubmissions = await getAllSubmissions();
 
-
   return (
     <div className="">
       <h1 className="text-2xl font-bold mb-4 text-center">
