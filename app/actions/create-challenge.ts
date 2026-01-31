@@ -41,6 +41,7 @@ export async function handleCreateChallenge(formData: FormData) {
       };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await raliAPI.post("/challenge", data);
 
     revalidatePath("/challenges");

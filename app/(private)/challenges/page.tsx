@@ -1,5 +1,6 @@
 import { ChallengesProps } from "@/@types/challenges/get-all-challenges";
 import { RaliProps } from "@/@types/rali/get-rali";
+import { userInfoProps } from "@/@types/user/user_info";
 import { ChallengeForm } from "@/components/ChallengeForm";
 import { ChallengeFormSubmit } from "@/components/ChallengeFormSubmit";
 
@@ -9,11 +10,12 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { raliAPI } from "@/lib/axios/rali-api";
 import { format } from "date-fns";
 import { Flame, Trophy, Users } from "lucide-react";
+import { cookies } from "next/headers";
 
 const GetAllChallenges = async () => {
   const { data } = await raliAPI.get<ChallengesProps>("/challenge");
 
-  return data ;
+  return data;
 };
 
 const GetraliActive = async () => {
@@ -30,23 +32,37 @@ export default async function ChallengesPage() {
 
   const rali = raliActive.Allrali.filter((rali) => rali.status === "ACTIVE")[0];
 
+  const cookie = await cookies();
+  const userInfoFromCookie = cookie.get("user_infos")?.value;
+  const userInfos: userInfoProps = userInfoFromCookie
+    ? JSON.parse(userInfoFromCookie)
+    : {};
+
+  
+
   return (
     <div className="w-full flex flex-col gap-3">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="bg-[#9E2221] w-full">
-            Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
-          </Button>
-        </DialogTrigger>
-        <div className="w-[80vw]">
-          <ChallengeForm id={rali.id} name={rali.name} />
-        </div>
-      </Dialog>
+      {userInfos.role === "COORD" ? (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-[#9E2221] w-full">
+              Criar desafio <Flame className="w-5 h-5 mb-1" />{" "}
+            </Button>
+          </DialogTrigger>
+          <div className="w-[80vw]">
+            <ChallengeForm id={rali.id} name={rali.name} />
+          </div>
+        </Dialog>
+      ) : null}
+
+       <h1 className="text-lg font-bold text-center uppercase" >Desafios ativos</h1>
 
       {allChallenges.challenges
-        .filter((chall) => chall.status === "ACTIVE")
-        .map((challenge, index) => (
-          <Card
+        .filter((chall) => chall.status === "ACTIVE" && new Date(chall.endDate) >= new Date() )
+        .map((challenge, index) => {
+       
+          return(
+             <Card
             key={challenge.id}
             className={`p-3 gap-1 w-full bg-[#4a4f63] text-white ${
               index === 0 ? "mt-0" : "mt-5"
@@ -98,11 +114,16 @@ export default async function ChallengesPage() {
                 <Button className="mt-3">Enviar desafio</Button>
               </DialogTrigger>
               <div className="w-[80vw]">
-                <ChallengeFormSubmit title={challenge.title} description={challenge.description} challengeId={challenge.id} />
+                <ChallengeFormSubmit
+                  title={challenge.title}
+                  description={challenge.description}
+                  challengeId={challenge.id}
+                />
               </div>
             </Dialog>
           </Card>
-        ))}
+          )
+        })}
     </div>
   );
 }
