@@ -6,7 +6,7 @@ export interface Submission {
   id: string
   description: string | null
   photoUrl: string
-  status: "PENDING" | "ACTIVE" | "COMPLETED" | "CANCELLED"
+  status: "PENDING" | "APPROVED" | "REJECTED" | "REVISION"
   feedback: string | null
   groupId: string
   memberId: string
@@ -20,3 +20,8 @@ export interface Submission {
   memberName: string
   groupName: string
 }
+
+export type changeStatusSubmission = Pick<Submission, "status"> & 
+  Partial<Pick<Submission, "flashMissionId" | "challengeId">>
+
+export type findStatusChange = Partial<Pick<Submission, "flashMissionId" | "challengeId">>
